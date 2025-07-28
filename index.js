@@ -15,7 +15,13 @@ app.post('/webhook', (req, res) => {
 
 const express = require("express");
 const app = express();
+app.post("/webhook", express.json(), (req, res) => {
+  console.log("🎯 Webhook nhận từ Zalo:");
+  console.log(JSON.stringify(req.body, null, 2)); // In đẹp dữ liệu JSON
 
+  // Trả về mã 200 để Zalo biết server phản hồi OK
+  res.sendStatus(200);
+});
 app.use(express.json());
 
 // ✅ Route kiểm tra server sống hay chết
@@ -27,6 +33,10 @@ app.get("/", (req, res) => {
 
 // Cổng lắng nghe
 const PORT = process.env.PORT || 3000;
+// Route xác minh domain với Zalo
+app.get('/zalo-verification.txt', (req, res) => {
+  res.send('zaloverify_LA1xZmFsc2UxMjM0'); // Thay bằng chuỗi thật từ file Zalo
+});
 app.listen(PORT, () => {
   console.log(`Server đang chạy tại cổng ${PORT}`);
 });
