@@ -13,6 +13,23 @@ app.post('/webhook', (req, res) => {
   res.sendStatus(200);
 });
 
+const express = require("express");
+const app = express();
+
+app.use(express.json());
+
+// ✅ Route kiểm tra server sống hay chết
+app.get("/", (req, res) => {
+  res.send("Zalo Webhook is running!");
+});
+
+// ... bạn có thể có route POST /webhook ở đây
+
+// Cổng lắng nghe
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server đang chạy tại cổng ${PORT}`);
+});
 app.listen(port, () => {
   console.log(`Server đang chạy tại http://localhost:${port}`);
 });
